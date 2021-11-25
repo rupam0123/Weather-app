@@ -5,7 +5,6 @@ import { Provider } from 'react-redux'
 import { createLogger } from 'redux-logger'
 import thunk from 'redux-thunk'
 import reducer from './reducer'
-import { getAllUser } from './actions'
 import './index.css';
 import App from './container/App';
 
@@ -18,7 +17,7 @@ const store = createStore(
   reducer,
   applyMiddleware(...middleware)
 )
-store.dispatch(getAllUser());
+
 
 render(
   <Provider store={store}>

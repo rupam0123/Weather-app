@@ -1,4 +1,4 @@
-import { RECEIVE_USER, LOGIN_PAGE, SET_DATA } from "../actions";
+import { RECEIVE_USER, LOGIN_PAGE, SET_DATA,SET_WEATHER,SET_CITY } from "../actions";
 
 const initialState = {
   show: false,
@@ -27,7 +27,6 @@ export default function logIn(state = initialState, action) {
         ...state,
         data: action.payload
       }
-
     default:
       return state
   }

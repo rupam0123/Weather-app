@@ -1,8 +1,9 @@
 import React from 'react'
 import { Modal, Button,} from 'react-bootstrap'
 import { useSelector ,useDispatch} from 'react-redux';
-import { logIn, setLogin} from '../actions';
+import { getAllUser, logIn, setLogin} from '../actions';
 import { useNavigate } from 'react-router';
+import { useEffect } from 'react';
 
 
 
@@ -10,10 +11,12 @@ export default function Login() {
   const data = useSelector((state) => state.logIn.data)
   const showModal = useSelector((state) => state.logIn)
   const dispatch=useDispatch();
-
   const navigate =useNavigate();
 
-  
+  useEffect(() => {
+
+      dispatch(getAllUser())
+    }, [dispatch])
     
   const handleChange = (event) =>{
     dispatch(setLogin({...data,[event.target.name] : event.target.value}))
@@ -30,15 +33,17 @@ export default function Login() {
   }
 
   const loggedIn=(username,password) =>{
-      console.log(username);
+      
       if(username===data.userName && password===data.password){
           return(
               navigate("/Dashboard")
               )
           }
-        else(
-            handleClose()
-        )
+        else{
+          alert("incorrect username or password");
+          
+            
+        }
 
       }
 
