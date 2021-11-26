@@ -5,6 +5,10 @@ export const RECEIVE_USER = 'RECEIVE_USER'
 export const SET_DATA ='SET_DATA'
 export const SET_WEATHER = 'SET_WEATHER'
 export const SET_CITY ='SET_CITY'
+export const SET_CITYNAME ='SET_CITYNAME'
+export const SET_WEATHERTYPE ='SET_WEATHERTYPE'
+export const SET_WIND ='SET_WIND'
+
 
   const receiveUser= (user) =>{
     return{
@@ -41,6 +45,24 @@ export const getAllUser=()=>(dispatch)=>{
   export const setWeatherApi = (payload)=>{
     return{
       type:SET_WEATHER,
+      payload
+    }
+  }
+  export const setCityName = (payload) =>{
+    return{
+      type:SET_CITYNAME,
+      payload
+    }
+  }
+  export const setWeather = (payload) =>{
+    return{
+      type:SET_WEATHERTYPE,
+      payload
+    }
+  }
+  export const setWind = (payload) =>{
+    return{
+      type:SET_WIND,
       payload
     }
   }

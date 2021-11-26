@@ -3,7 +3,8 @@ import { Modal, Button,} from 'react-bootstrap'
 import { useSelector ,useDispatch} from 'react-redux';
 import { getAllUser, logIn, setLogin} from '../actions';
 import { useNavigate } from 'react-router';
-import { useEffect } from 'react';
+import { useEffect ,useState} from 'react';
+import { requestWeather } from '../thunks/getApi';
 
 
 
@@ -12,11 +13,43 @@ export default function Login() {
   const showModal = useSelector((state) => state.logIn)
   const dispatch=useDispatch();
   const navigate =useNavigate();
+  const [location ,setLocation] =useState({
+    loaded:false,
+    coordinates: {lat:"",lng :""},
+  })
+  const city = showModal.records.map((item)=>(
+    item.cityName
+    
+  ))
+  const onSuccess =(event)=>{
+    setLocation({
+      loaded:true,
+      coordinates:{
+        lat:event.coords.latitude,
+        lng:event.coords.longitute
+
+      }
+    })
+  }
+const onError =() =>{
+  alert("allow not performed")
+  dispatch(requestWeather(city))
+
+
+}
+
+  const getGeoLocation = () =>{
+    if ("geolocation" in navigator){
+    navigator.geolocation.getCurrentPosition((event)=>onSuccess(event),onError)
+    }
+    else{
+      console.log("alert not performed")
+    }
+  }
 
   useEffect(() => {
-
-      dispatch(getAllUser())
-    }, [dispatch])
+    dispatch(getAllUser())  
+    }, [])
     
   const handleChange = (event) =>{
     dispatch(setLogin({...data,[event.target.name] : event.target.value}))
@@ -33,12 +66,13 @@ export default function Login() {
   }
 
   const loggedIn=(username,password) =>{
-      
       if(username===data.userName && password===data.password){
+        getGeoLocation();
           return(
-              navigate("/Dashboard")
-              )
-          }
+             navigate("/Dashboard")
+          )
+          
+        }
         else{
           alert("incorrect username or password");
           
